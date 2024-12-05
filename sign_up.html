@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #D2E6E4;
+            --secondary-color: #496662;
+            --font-size-base: 16px;
+            --spacing-unit: 8px;
+            --transition-base: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FAFAFA;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem;
+            margin: 0 auto;
+        }
+
+        .sign-up-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sign-up-main__logo {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .sign-up-main__logo img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .sign-up-main__form {
+            flex: 1;
+            max-width: 450px;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .sign-up-main__form h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .sign-up-main__form__form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            font-size: var(--font-size-base);
+            transition: var(--transition-base);
+            background: transparent;
+        }
+
+        .input-group input::placeholder {
+            color: transparent;
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 0 0.5rem;
+            color: #6B7280;
+            transition: var(--transition-base);
+            pointer-events: none;
+        }
+
+        .input-group input:focus,
+        .input-group input:not(:placeholder-shown) {
+            border-color: var(--secondary-color);
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label {
+            top: 0;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        .input-group.password-group {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6B7280;
+            transition: var(--transition-base);
+            display: flex;
+            align-items: center;
+            padding: 0.25rem;
+        }
+
+        .toggle-password:hover {
+            color: var(--secondary-color);
+        }
+
+        .sign-up-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-base);
+            margin-top: 0.5rem;
+        }
+
+        .sign-up-btn:hover {
+            background: #3a524f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(73, 102, 98, 0.2);
+        }
+
+        .login-link {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .login-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition-base);
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #6B7280;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            font-size: 0.875rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-size: 0.875rem;
+        }
+
+        .social-btn:hover {
+            border-color: var(--secondary-color);
+            background: #F8FAF9;
+            transform: translateY(-2px);
+        }
+
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sign-up-main {
+                gap: 2rem;
+            }
+
+            .sign-up-main__form {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .sign-up-main {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .sign-up-main__logo {
+                max-width: 400px;
+            }
+
+            .sign-up-main__form {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sign-up-main__form {
+                padding: 1.5rem;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+
+            .social-btn {
+                width: 100%;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: loading 0.8s linear infinite;
+        }
+
+        @keyframes loading {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <main class="sign-up-main">
+        <div class="sign-up-main__logo">
+            <img src="/api/placeholder/600/500" alt="Sign Up Illustration">
+        </div>
+
+        <div class="sign-up-main__form">
+            <h1>Welcome Sign Up!</h1>
+
+            <form class="sign-up-main__form__form" id="signupForm">
+                <div class="input-group">
+                    <input type="email" id="email" placeholder=" " required>
+                    <label for="email">Email address</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="username" placeholder=" " required>
+                    <label for="username">Username</label>
+                </div>
+
+                <div class="input-group password-group">
+                    <input type="password" id="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">👁️</button>
+                </div>
+
+                <div class="input-group password-group">
+                    <input type="password" id="confirmPassword" placeholder=" " required>
+                    <label for="confirmPassword">Confirm Password</label>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">👁️</button>
+                </div>
+
+                <button type="submit" class="sign-up-btn">Sign Up</button>
+
+                <div class="login-link">
+                    <a href="#">Don't have an account? Login</a>
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="social-buttons">
+                    <button type="button" class="social-btn">
+                        <img src="https://icon2.cleanpng.com/20240216/ehh/transparent-google-logo-black-background-with-google-logo-blue-and-red-1710875356941.webp" alt="Google icon">
+
+                        Continue with Google
+                    </button>
+                    <button type="button" class="social-btn">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/1200px-GitHub_Invertocat_Logo.svg.png" alt="GitHub icon">
+                        Continue with GitHub
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Password visibility toggle
+        const toggleButtons = document.querySelectorAll('.toggle-password');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const input = button.previousElementSibling.previousElementSibling;
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                button.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+            });
+        });
+
+        // Form submission handling
+        const form = document.getElementById('signupForm');
+        const submitButton = form.querySelector('.sign-up-btn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validate passwords match
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Add loading state
+            submitButton.disabled = true;
+            submitButton.classList.add('loading');
+            submitButton.textContent = '';
+
+            // Simulate form submission delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            // Reset button state
+            submitButton.disabled = false;
+            submitButton.classList.remove('loading');
+            submitButton.textContent = 'Sign Up';
+
+            // Add your form submission logic here
+            console.log('Form submitted successfully');
+        });
+
+        // Add smooth reveal animations for form elements
+        const formElements = document.querySelectorAll('.input-group, .sign-up-btn, .login-link, .divider, .social-buttons');
+        formElements.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'all 0.3s ease';
+
+            setTimeout(() => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, 100 * (index + 1));
+        });
+    });
+</script>
+</body>
+</html>
