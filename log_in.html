@@ -2,9 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/log_in.css">
 </head>
 <body>
+<div class="background-circle circle-bottom-1"></div>
+<div class="background-circle circle-bottom-1-2"></div>
+<main class="sign-up-main">
+    <div class="sign-up-main__form">
+        <h1>Welcome Back!</h1>
+        <form id="loginForm">
+            <div class="input-group">
+                <i class='bx bx-envelope input-icon'></i>
+                <input type="email" placeholder="Emailingizni kiriting..." required>
+            </div>
 
+            <div class="input-group">
+                <i class='bx bx-lock-alt input-icon'></i>
+                <input type="password" placeholder="Parol o'ylan toping..." required>
+                <button type="button" class="password-toggle">
+                    <i style="font-size: 20px" class='bx bx-show'></i>
+                </button>
+            </div>
+
+            <button type="submit" class="sign-up-btn">Log In</button>
+
+            <div class="login-link">
+                Don't have an account? <a href="#">Sign Up</a><br><br>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <div class="social-buttons">
+                <button type="button" class="social-btn">
+                    <img src="./assets/google.png" alt="Google">
+                    Continue with Google
+                </button>
+                <button type="button" class="social-btn">
+                    <img src="./assets/github.png" alt="GitHub">
+                    Continue with GitHub
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="sign-up-main__logo">
+        <img src="assets/log_in.png" alt="Sign Up Illustration">
+    </div>
+</main>
+
+<script>
+    const toggleButtons = document.querySelectorAll('.password-toggle');
+    const loginForm = document.getElementById('loginForm');
+
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const input = button.previousElementSibling;
+            const icon = button.querySelector('i');
+
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.classList.toggle('bx-show');
+            icon.classList.toggle('bx-hide');
+        });
+    });
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        console.log('Form submitted');
+    });
+</script>
 </body>
 </html>
