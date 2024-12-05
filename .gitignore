@@ -1,2 +1,14 @@
 .idea
 .idea/
+*.iml
+*.ipr
+*.iws
+out/
+target/
+*.class
+*.war
+*.ear
+*.jar
+*.zip
+*.tar.gz
+*.rar
