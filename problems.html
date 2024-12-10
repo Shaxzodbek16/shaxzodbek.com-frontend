@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problems</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    .problems-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      color: #1a1a1a;
+    }
+
+    .filters {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .filter-select {
+      padding: 8px 35px 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      appearance: none;
+      background: url('data:image/svg+xml;charset=US-ASCII,<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L13 1" stroke="%23666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat;
+      background-position: right 15px center;
+      background-color: white;
+      min-width: 120px;
+      cursor: pointer;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-container input {
+      padding: 8px 35px 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 250px;
+    }
+
+    .search-container i {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
+
+    .problems-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 8px;
+    }
+
+    .problems-table th {
+      text-align: left;
+      padding: 10px 20px;
+      color: #666;
+      font-weight: normal;
+      background: white;
+    }
+
+    .problems-table tr {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .problems-table tbody tr {
+      background: white;
+      cursor: pointer;
+    }
+
+    .problems-table tbody tr:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .problems-table td {
+      padding: 15px 20px;
+    }
+
+    .problems-table td:first-child {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .problems-table td:last-child {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    .difficulty {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+
+    .difficulty.easy {
+      background: #e6f4ea;
+      color: #1e8e3e;
+    }
+
+    .difficulty.medium {
+      background: #fff7e6;
+      color: #f2994a;
+    }
+
+    .difficulty.hard {
+      background: #fbe9e7;
+      color: #d93025;
+    }
+
+    .status i {
+      font-size: 1.2rem;
+    }
+
+    .status-complete {
+      color: #1e8e3e;
+    }
+
+    .status-incomplete {
+      color: #666;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 30px;
+      gap: 5px;
+    }
+
+    .pagination button {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 4px;
+    }
+
+    .pagination button.active {
+      background: #1a73e8;
+      color: white;
+      border-color: #1a73e8;
+    }
+
+    .pagination button:hover:not(.active) {
+      background: #f5f5f5;
+    }
+
+    .pagination .dots {
+      padding: 8px 12px;
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-container {
+        width: 100%;
+      }
+
+      .search-container input {
+        width: 100%;
+      }
+
+      .problems-table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .pagination {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<main class="problems-page">
+  <div class="header">
+    <h1>Problems</h1>
+    <div class="filters">
+      <select class="filter-select">
+        <option value="">Theme</option>
+        <option>Arrays</option>
+        <option>Strings</option>
+        <option>Dynamic Programming</option>
+      </select>
+      <select class="filter-select">
+        <option value="">Difficulty</option>
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
+      <div class="search-container">
+        <input type="text" placeholder="Search">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+  </div>
+
+  <table class="problems-table">
+    <thead>
+    <tr>
+      <th>Number</th>
+      <th>Title</th>
+      <th>Difficulty</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button><i class="fas fa-chevron-left"></i></button>
+    <button class="active">1</button>
+    <button>2</button>
+    <span class="dots">...</span>
+    <button>9</button>
+    <button>10</button>
+    <button><i class="fas fa-chevron-right"></i></button>
+  </div>
+</main>
+
+<script>
+  // Sample data for problems
+  const problems = [
+    { number: 1, title: "Lorem Ipsum is simply dummy text of", difficulty: "Easy", completed: false },
+    { number: 2, title: "Lorem Ipsum is simply dummy text of", difficulty: "Easy", completed: true },
+    { number: 3, title: "Lorem Ipsum is simply dummy text of", difficulty: "Medium", completed: true },
+    { number: 4, title: "Lorem Ipsum is simply dummy text of", difficulty: "Medium", completed: true },
+    { number: 5, title: "Lorem Ipsum is simply dummy text of", difficulty: "Hard", completed: true },
+    { number: 6, title: "Lorem Ipsum is simply dummy text of", difficulty: "Medium", completed: true },
+    { number: 7, title: "Lorem Ipsum is simply dummy text of", difficulty: "Medium", completed: true },
+    { number: 8, title: "Lorem Ipsum is simply dummy text of", difficulty: "Hard", completed: true },
+    { number: 9, title: "Lorem Ipsum is simply dummy text of", difficulty: "Easy", completed: true },
+    { number: 10, title: "Lorem Ipsum is simply dummy text of", difficulty: "Easy", completed: true },
+  ];
+
+  // Populate table
+  const tbody = document.querySelector('.problems-table tbody');
+  problems.forEach(problem => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+                <td>${problem.number}</td>
+                <td>${problem.title}</td>
+                <td><span class="difficulty ${problem.difficulty.toLowerCase()}">${problem.difficulty}</span></td>
+                <td class="status">
+                    ${problem.completed ?
+            '<i class="fas fa-check status-complete"></i>' :
+            '<i class="far fa-square status-incomplete"></i>'}
+                </td>
+            `;
+    tbody.appendChild(tr);
+  });
+
+  // Search functionality
+  const searchInput = document.querySelector('.search-container input');
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const rows = tbody.querySelectorAll('tr');
+
+    rows.forEach(row => {
+      const title = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+      if (title.includes(searchTerm)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+
+  // Filter functionality
+  const difficultySelect = document.querySelectorAll('.filter-select')[1];
+  difficultySelect.addEventListener('change', (e) => {
+    const difficulty = e.target.value.toLowerCase();
+    const rows = tbody.querySelectorAll('tr');
+
+    rows.forEach(row => {
+      const rowDifficulty = row.querySelector('.difficulty').textContent.toLowerCase();
+      if (!difficulty || rowDifficulty === difficulty) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+
+  // Pagination functionality
+  const paginationButtons = document.querySelectorAll('.pagination button');
+  paginationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      if (!button.classList.contains('active') && !button.querySelector('i')) {
+        paginationButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>

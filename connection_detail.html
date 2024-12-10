@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connection Detail</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2B7C85;
+      --secondary: #A4D4D8;
+      --background: #f5f7fa;
+      --text: #333;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--background);
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .profile-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+      animation: slideIn 0.8s ease-out;
+    }
+
+    .profile-header {
+      position: relative;
+      background: var(--primary);
+      padding: 0;
+      text-align: center;
+      color: white;
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .image-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(43, 124, 133, 0.9));
+      padding: 2rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .image-container:hover .image-overlay {
+      transform: translateY(0);
+    }
+
+    .image-container:hover .profile-image {
+      transform: scale(1.05);
+    }
+
+    .name {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards 0.3s;
+    }
+
+    .job-title {
+      font-size: 1.2rem;
+      opacity: 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      animation: fadeInUp 0.8s ease-out forwards 0.5s;
+    }
+
+    .details {
+      margin-top: -2rem;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .detail-group {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .detail-group:nth-child(2) { animation-delay: 0.4s; }
+    .detail-group:nth-child(3) { animation-delay: 0.6s; }
+    .detail-group:nth-child(4) { animation-delay: 0.8s; }
+
+    .detail-label {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .detail-value {
+      background: rgba(164, 212, 216, 0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .detail-value:hover {
+      background: rgba(164, 212, 216, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .matches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .match-tag {
+      background: var(--secondary);
+      color: var(--primary);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .match-tag:hover {
+      transform: scale(1.05);
+      background: var(--primary);
+      color: white;
+    }
+
+    .status-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      background: #4CAF50;
+      color: white;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards 1s;
+      z-index: 3;
+    }
+
+    .status-badge.unlisted {
+      background: #f44336;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .image-container {
+        height: 300px;
+      }
+
+      .name {
+        font-size: 2rem;
+      }
+
+      .details {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .image-container {
+        height: 250px;
+      }
+
+      .image-overlay {
+        transform: translateY(0);
+        padding: 1rem;
+      }
+
+      .name {
+        font-size: 1.5rem;
+      }
+
+      .job-title {
+        font-size: 1rem;
+      }
+
+      .status-badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .matches {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="image-container">
+        <img src="assets/sign_up.png" alt="{{ connection.first_name }}" class="profile-image">
+        <div class="image-overlay">
+          <h1 class="name">{{ connection.first_name }} {{ connection.last_name }}</h1>
+          <div class="job-title">{{ connection.job_title|default:'Not specified' }}</div>
+        </div>
+      </div>
+      <div class="status-badge {% if not connection.listed %}unlisted{% endif %}">
+        {{ connection.listed|yesno:'Listed,Unlisted' }}
+      </div>
+    </div>
+    <div class="details">
+      <div class="detail-group">
+        <div class="detail-label">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+          </svg>
+          Birth Date
+        </div>
+        <div class="detail-value">{{ connection.birth_date|date:"F j, Y" }}</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+          </svg>
+          Met At
+        </div>
+        <div class="detail-value">{{ connection.met_address }}</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+          </svg>
+          Home Address
+        </div>
+        <div class="detail-value">{{ connection.home_address|default:'Not specified' }}</div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-label">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+          </svg>
+          Who For Me
+        </div>
+        <div class="matches">
+          {% for match in connection.who_for_me.all %}
+          <span class="match-tag">{{ match.name }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.detail-group').forEach(group => {
+      group.addEventListener('mouseenter', () => {
+        group.querySelector('.detail-value').style.transform = 'translateY(-2px)';
+      });
+
+      group.addEventListener('mouseleave', () => {
+        group.querySelector('.detail-value').style.transform = 'translateY(0)';
+      });
+    });
+
+    const matches = document.querySelectorAll('.match-tag');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.5 });
+
+    matches.forEach((match, index) => {
+      match.style.opacity = '0';
+      match.style.transform = 'translateY(20px)';
+      match.style.transition = `all 0.3s ease ${index * 0.1}s`;
+      observer.observe(match);
+    });
+  });
+</script>
+</body>
+</html>

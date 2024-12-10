@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Loading</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: monospace;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #2B7C85;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            width: 90%;
+            max-width: 600px;
+            padding: 1rem;
+        }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: clamp(2px, 1vw, 4px);
+            width: 100%;
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            border: 1px solid #2B7C85;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            position: relative;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .cell.active {
+            opacity: 1;
+            background: rgba(43, 124, 133, 0.2);
+            box-shadow: 0 0 10px #2B7C85;
+        }
+
+        .binary-stream {
+            position: absolute;
+            font-size: clamp(0.7rem, 1.5vw, 1rem);
+            color: #2B7C85;
+            opacity: 0.5;
+            animation: fall linear infinite;
+        }
+
+        .loading-text {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 2rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .algorithm-name {
+            position: absolute;
+            top: -2rem;
+            font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+            opacity: 0.6;
+            animation: fadeInOut 2s ease-in-out infinite;
+            text-align: center;
+            width: 100%;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+
+        .pointer {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: clamp(4px, 1vw, 8px) solid transparent;
+            border-right: clamp(4px, 1vw, 8px) solid transparent;
+            border-top: clamp(6px, 1.5vw, 12px) solid #2B7C85;
+            animation: pointMove 1s ease infinite;
+        }
+
+        @keyframes pointMove {
+            0% { transform: translateY(-5px); }
+            50% { transform: translateY(5px); }
+            100% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 480px) {
+            .matrix {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .binary-stream {
+                display: none;
+            }
+
+            .container {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .matrix {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .loading-text {
+                letter-spacing: 0.2em;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 800px;
+            }
+
+            .matrix {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="algorithm-name">Binary Search</div>
+    <div class="matrix"></div>
+    <div class="pointer"></div>
+    <div class="loading-text">Processing</div>
+</div>
+
+<script>
+    const matrix = document.querySelector('.matrix');
+    const algorithmName = document.querySelector('.algorithm-name');
+
+    const algorithms = [
+        'Binary Search', 'Quick Sort', 'Merge Sort',
+        'Depth First Search', 'Breadth First Search',
+        'Dynamic Programming', 'Dijkstra Algorithm'
+    ];
+
+    function createMatrix() {
+        matrix.innerHTML = '';
+        const isMobile = window.innerWidth <= 480;
+        const isVerySmall = window.innerWidth <= 320;
+        const isLarge = window.innerWidth >= 1200;
+
+        let cellCount;
+        if (isVerySmall) cellCount = 16;
+        else if (isMobile) cellCount = 36;
+        else if (isLarge) cellCount = 100;
+        else cellCount = 64;
+
+        for (let i = 0; i < cellCount; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.textContent = Math.floor(Math.random() * 2);
+            matrix.appendChild(cell);
+        }
+    }
+
+    function createBinaryStreams() {
+        document.querySelectorAll('.binary-stream').forEach(stream => stream.remove());
+
+        if (window.innerWidth > 480) {
+            const streamCount = Math.floor(window.innerWidth / 50);
+            for (let i = 0; i < streamCount; i++) {
+                const stream = document.createElement('div');
+                stream.className = 'binary-stream';
+                stream.style.left = `${Math.random() * 100}%`;
+                stream.style.animationDuration = `${3 + Math.random() * 5}s`;
+                stream.style.animationDelay = `-${Math.random() * 2}s`;
+                document.body.appendChild(stream);
+            }
+        }
+    }
+
+    function animateCells() {
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => cell.classList.remove('active'));
+
+        const patternLength = Math.floor(Math.random() * 5) + 3;
+        const startIndex = Math.floor(Math.random() * (cells.length - patternLength));
+
+        for (let i = 0; i < patternLength; i++) {
+            setTimeout(() => {
+                cells[startIndex + i]?.classList.add('active');
+            }, i * 200);
+        }
+    }
+
+    function changeAlgorithm() {
+        const newAlgo = algorithms[Math.floor(Math.random() * algorithms.length)];
+        algorithmName.style.opacity = 0;
+        setTimeout(() => {
+            algorithmName.textContent = newAlgo;
+            algorithmName.style.opacity = 0.6;
+        }, 500);
+    }
+
+    createMatrix();
+    createBinaryStreams();
+
+    window.addEventListener('resize', () => {
+        createMatrix();
+        createBinaryStreams();
+    });
+
+    setInterval(animateCells, 1000);
+    setInterval(changeAlgorithm, 2000);
+
+    setInterval(() => {
+        document.querySelectorAll('.cell').forEach(cell => {
+            if (Math.random() > 0.8) {
+                cell.textContent = Math.floor(Math.random() * 2);
+            }
+        });
+    }, 500);
+
+    setInterval(() => {
+        document.querySelectorAll('.binary-stream').forEach(stream => {
+            stream.textContent = Math.floor(Math.random() * 2);
+        });
+    }, 100);
+</script>
+</body>
+</html>

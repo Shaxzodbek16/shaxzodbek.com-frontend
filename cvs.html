@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 0.75rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 300px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-button {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #1a1a1a;
+    }
+
+    .card-role {
+      font-size: 1rem;
+      color: #2563eb;
+      margin-bottom: 1rem;
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .button {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .button-primary {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .button-secondary {
+      background-color: #f3f4f6;
+      color: #1a1a1a;
+    }
+
+    .button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .pagination button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pagination button.active {
+      background-color: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .pagination button:hover:not(.active) {
+      background-color: #f3f4f6;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .search-container {
+        width: 100%;
+      }
+
+      .search-input {
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>Cv</h1>
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Search">
+    <button class="search-button">🔍</button>
+  </div>
+</div>
+
+<div class="grid">
+  <!-- Card 1 -->
+  <div class="card" style="animation-delay: 0.1s">
+    <img src="/api/placeholder/400/320" alt="Profile" class="card-image">
+    <div class="card-content">
+      <h2 class="card-title">Title goes here</h2>
+      <p class="card-role">Frontend Developer</p>
+      <p class="card-description">It if sometimes furnished unwilling as additions so. Blessing resolved peculiar fat graceful ham. Sussex on at really ladies in as elinor. Sir sex opinions age properly extended.</p>
+      <div class="card-actions">
+        <button class="button button-primary">
+          <span>⬇️</span>
+          Download File
+        </button>
+        <button class="button button-secondary">
+          <span>👁️</span>
+          View CV
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card" style="animation-delay: 0.2s">
+    <img src="/api/placeholder/400/320" alt="Profile" class="card-image">
+    <div class="card-content">
+      <h2 class="card-title">Title goes here</h2>
+      <p class="card-role">Frontend Developer</p>
+      <p class="card-description">It if sometimes furnished unwilling as additions so. Blessing resolved peculiar fat graceful ham. Sussex on at really ladies in as elinor. Sir sex opinions age properly extended.</p>
+      <div class="card-actions">
+        <button class="button button-primary">
+          <span>⬇️</span>
+          Download File
+        </button>
+        <button class="button button-secondary">
+          <span>👁️</span>
+          View CV
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card" style="animation-delay: 0.3s">
+    <img src="/api/placeholder/400/320" alt="Profile" class="card-image">
+    <div class="card-content">
+      <h2 class="card-title">Title goes here</h2>
+      <p class="card-role">Frontend Developer</p>
+      <p class="card-description">It if sometimes furnished unwilling as additions so. Blessing resolved peculiar fat graceful ham. Sussex on at really ladies in as elinor. Sir sex opinions age properly extended.</p>
+      <div class="card-actions">
+        <button class="button button-primary">
+          <span>⬇️</span>
+          Download File
+        </button>
+        <button class="button button-secondary">
+          <span>👁️</span>
+          View CV
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card" style="animation-delay: 0.4s">
+    <img src="/api/placeholder/400/320" alt="Profile" class="card-image">
+    <div class="card-content">
+      <h2 class="card-title">Title goes here</h2>
+      <p class="card-role">Frontend Developer</p>
+      <p class="card-description">It if sometimes furnished unwilling as additions so. Blessing resolved peculiar fat graceful ham. Sussex on at really ladies in as elinor. Sir sex opinions age properly extended.</p>
+      <div class="card-actions">
+        <button class="button button-primary">
+          <span>⬇️</span>
+          Download File
+        </button>
+        <button class="button button-secondary">
+          <span>👁️</span>
+          View CV
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <button>←</button>
+  <button class="active">1</button>
+  <button>2</button>
+  <button>...</button>
+  <button>9</button>
+  <button>10</button>
+  <button>→</button>
+</div>
+
+<script>
+  // Add hover animation to cards
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-5px)';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0)';
+    });
+  });
+
+  // Add search functionality
+  const searchInput = document.querySelector('.search-input');
+  const cards = document.querySelectorAll('.card');
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+
+    cards.forEach(card => {
+      const title = card.querySelector('.card-title').textContent.toLowerCase();
+      const role = card.querySelector('.card-role').textContent.toLowerCase();
+      const description = card.querySelector('.card-description').textContent.toLowerCase();
+
+      if (title.includes(searchTerm) || role.includes(searchTerm) || description.includes(searchTerm)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  // Add pagination functionality
+  const paginationButtons = document.querySelectorAll('.pagination button');
+
+  paginationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active class from all buttons
+      paginationButtons.forEach(btn => btn.classList.remove('active'));
+      // Add active class to clicked button if it's a number
+      if (!isNaN(button.textContent)) {
+        button.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>
